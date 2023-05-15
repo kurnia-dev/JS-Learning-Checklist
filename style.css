@@ -1,0 +1,89 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --checked-color: #12099b;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: url(bg.jpg) no-repeat;
+  /* background-position: center; */
+  background-attachment: fixed;
+  background-size: 120%;
+  color: antiquewhite;
+}
+
+main {
+  padding: 80px;
+  max-width: 1444px;
+  margin: 40px auto;
+  background: rgba(1, 0, 6, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  -webkit-backdrop-filter: blur(4.5px);
+  backdrop-filter: blur(4.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+main h1 {
+  text-align: center;
+  font-size: 40px;
+}
+
+main p {
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 30px;
+  font-style: italic;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
+}
+
+.checklist {
+  margin: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  /* width: 45%; */
+}
+
+.checklist h2 {
+  margin-bottom: 40px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.116);
+}
+
+.checklist label {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-family: monospace;
+  font-size: 22px;
+  line-height: 2;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  all: unset;
+  width: 16px;
+  height: 16px;
+  border-radius: 10px;
+  border: 2px solid;
+  transition: 0.15s;
+}
+
+input[type="checkbox"]:checked {
+  background: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="white" d="m10.6 13.8l-2.15-2.15q-.275-.275-.7-.275t-.7.275q-.275.275-.275.7t.275.7L9.9 15.9q.3.3.7.3t.7-.3l5.65-5.65q.275-.275.275-.7t-.275-.7q-.275-.275-.7-.275t-.7.275L10.6 13.8ZM12 22q-2.075 0-3.9-.788t-3.175-2.137q-1.35-1.35-2.137-3.175T2 12q0-2.075.788-3.9t2.137-3.175q1.35-1.35 3.175-2.137T12 2q2.075 0 3.9.788t3.175 2.137q1.35 1.35 2.138 3.175T22 12q0 2.075-.788 3.9t-2.137 3.175q-1.35 1.35-3.175 2.138T12 22Z"%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  /* border-color: var(--checked-color); */
+}
