@@ -64,6 +64,15 @@ function loadProgress(el, id) { // to load checked input from local storage
     let arr = JSON.parse(localStorage.getItem('progress'))     
 
     for (let i in arr) {
-        if (arr[i] == id) el.setAttribute('checked', 'checked') 
+        if (arr[i] == id) el.checked = true;  
     }
 }
+
+document.querySelector('#reset').addEventListener('click', (e) => {
+    e.preventDefault()
+    let conf = confirm('Hapus semua progres? Anda akan kehilangan progress Anda sejauh ini.')
+    if (conf) {
+        localStorage.removeItem('progress')
+        window.location.reload()
+    }
+})

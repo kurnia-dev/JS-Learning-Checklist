@@ -87,3 +87,28 @@ input[type="checkbox"]:checked {
   background-size: cover;
   /* border-color: var(--checked-color); */
 }
+
+/* reset */
+
+a#reset {
+  all: unset;
+  display: block;
+  width: max-content;
+  line-height: 1;
+  font-size: 18px;
+  text-transform: capitalize;
+  margin: 0 auto;
+  transition: 0.15s;
+  cursor: pointer;
+  padding: 10px 16px;
+  background: rgba(1, 0, 6, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  -webkit-backdrop-filter: blur(4.5px);
+  backdrop-filter: blur(4.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+a#reset:hover {
+  transform: scale(1.1);
+}
