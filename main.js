@@ -4,13 +4,6 @@ fetch('js-learning-checklist.json')
         loadMaterials(data)
     })
 
-// const xhr = new XMLHttpRequest()
-// xhr.open("GET", "js-learning-checklist.json")
-// xhr.send()
-// xhr.onload = () => {
-//     let e = JSON.parse(xhr.responseText)
-//     loadMaterials(e)
-// }
 
 function loadMaterials(Materials) {
     const container = document.querySelector('.container')
@@ -26,46 +19,93 @@ function loadMaterials(Materials) {
         for (let i in Materials[prop]) {
             let label = document.createElement('label')
             let num = Number(i) + 1
-            label.innerHTML = `<input type="checkbox" id="${prop + ' ' + num}">${Materials[prop][i]}`
+            label.innerHTML = `<input type="checkbox" disabled id="${prop + ' ' + num}">${Materials[prop][i]}`
             div.append(label)
         }
         
         container.append(div)
     }
-
+    
     addEvent()
 }
 
 function addEvent() {
     let checkbox = document.querySelectorAll('input')
-    checkbox.forEach(el => {
-        let id = el.getAttribute('id')
-        el.addEventListener('click', () => {
-            saveProgress(id)
-        })
+    
+    let arr = JSON.parse(localStorage.getItem('progress'))
+    if (!arr) {
+        checkbox[0].disabled = false
+        checkbox[0].parentElement.classList.add('start')
+    }
 
+    for (let el of checkbox) {
+        let id = el.getAttribute('id')
+        
         loadProgress(el, id)
-    });
+
+        el.addEventListener('click', () => {
+            saveProgress(el, id)
+            loadProgress(el, id)
+        })
+    }
 }
 
-function saveProgress(id) { // To save the checked input to local storage
-    if (!localStorage.getItem('progress')) {
-        let arr = [id]
-        localStorage.setItem('progress', JSON.stringify(arr))
+function saveProgress(el, id) {
+    let arr = JSON.parse(localStorage.getItem('progress'))
+    if (!arr) { 
+        arr = [id] 
+        localStorage.setItem('progress', JSON.stringify(arr)) 
     } else {
-        let arr = JSON.parse(localStorage.getItem('progress')) // array
-        // console.log(typeof get);
+        let arr = JSON.parse(localStorage.getItem('progress')) 
         arr.push(id)
         localStorage.setItem('progress', JSON.stringify(arr))
+        loadProgress(el, id)
+    }
+    
+    undisabled(arr)
+}
+
+function loadProgress(el, id) { 
+    let arr = JSON.parse(localStorage.getItem('progress'))
+    if (arr) { 
+        for (let i in arr) {
+            if (arr[i] == id) {
+                el.checked = true
+                el.parentElement.classList.add('done')
+            }
+        }
+    } 
+    
+    undisabled(arr)
+}
+
+function undisabled(arr) {
+
+    if (arr) { // OK
+        let lastEl = document.getElementById(arr.slice(-1)) // get the last progress element
+        let nextelem = (!lastEl.parentElement.nextElementSibling) ? 
+            lastEl.parentElement.parentElement.nextElementSibling.children[1].children[0] : 
+            lastEl.parentElement.nextElementSibling.children[0] // true
+            
+        nextelem.disabled = false
+        nextProgress(nextelem, lastEl)
+
+    } else {
+        let firstElem = document.querySelector('label') // get the first progress element // OK
+        firstElem.disabled = true
+        firstElem.addEventListener('click', () => {
+            firstElem.classList.remove('start')
+        } )
+        let nextelem = firstElem.parentElement.nextElementSibling.children[0] // true
+        nextProgress(nextelem, firstElem)
     }
 }
 
-function loadProgress(el, id) { // to load checked input from local storage
-    let arr = JSON.parse(localStorage.getItem('progress'))     
-
-    for (let i in arr) {
-        if (arr[i] == id) el.checked = true;  
-    }
+function nextProgress(nextelem, lastEl) {
+    nextelem.parentElement.classList.add('last-progress')
+    lastEl.parentElement.classList.remove('last-progress')
+    lastEl.parentElement.classList.add('done')
+    lastEl.disabled = true
 }
 
 document.querySelector('#reset').addEventListener('click', (e) => {
